@@ -16,6 +16,21 @@ Production guidance for building AI agents with the Claude Agent SDK in Python.
 > **Naming**: The Claude Code SDK was renamed to the Claude Agent SDK (v0.1.0+).
 > Package: `pip install claude-agent-sdk` · Import: `from claude_agent_sdk import ...`
 
+## Message Types
+
+All message types for type checking and `isinstance()` checks:
+
+```python
+from claude_agent_sdk import (
+    AssistantMessage,     # Claude's text/tool responses
+    ResultMessage,        # Final result with subtype (success/error/cancelled)
+    SystemMessage,        # System events (session_id, etc.)
+    UserMessage,          # User prompts
+    ToolUseMessage,       # Tool invocation requests
+    ToolResultMessage,    # Tool execution results
+)
+```
+
 ## Quick Reference — Two Interaction Modes
 
 ### 1. `query()` — Stateless, One-Shot
@@ -74,17 +89,17 @@ All options are optional. Key fields:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `allowed_tools` | `list[str]` | Tools Claude can use. See Built-in Tools below. |
-| `disallowed_tools` | `list[str]` | Explicitly block specific tools. |
-| `permission_mode` | `str` | `"default"`, `"acceptEdits"`, or `"bypassPermissions"`. |
-| `system_prompt` | `str` or `dict` | Custom instructions. Use `{"type": "preset", "preset": "claude_code"}` for CC default. |
-| `model` | `str` | e.g. `"sonnet"`, `"opus"`, `"haiku"`, or full model string. |
-| `cwd` | `str` or `Path` | Working directory for the agent. |
-| `max_turns` | `int` | Maximum agentic loop iterations. |
-| `setting_sources` | `list[str]` | `["user", "project"]` to load Skills/CLAUDE.md from filesystem. |
-| `mcp_servers` | `dict` | MCP server configurations. |
-| `agents` | `dict[str, AgentDefinition]` | Named subagent definitions. |
-| `hooks` | `dict` | Lifecycle hook callbacks. |
+| `allowed_tools` | `list[str] \| None` | Tools Claude can use. See Built-in Tools below. |
+| `disallowed_tools` | `list[str] \| None` | Explicitly block specific tools. |
+| `permission_mode` | `"default" \| "acceptEdits" \| "bypassPermissions"` | Permission strategy. |
+| `system_prompt` | `str \| dict \| None` | Custom instructions. Use `{"type": "preset", "preset": "claude_code"}` for CC default. |
+| `model` | `str \| None` | e.g. `"sonnet"`, `"opus"`, `"haiku"`, or full model string. |
+| `cwd` | `str \| Path \| None` | Working directory for the agent. |
+| `max_turns` | `int \| None` | Maximum agentic loop iterations. |
+| `setting_sources` | `list[Literal["user", "project"]] \| None` | `["user", "project"]` to load Skills/CLAUDE.md from filesystem. |
+| `mcp_servers` | `dict \| None` | MCP server configurations. |
+| `agents` | `dict[str, AgentDefinition] \| None` | Named subagent definitions. |
+| `hooks` | `dict \| None` | Lifecycle hook callbacks. |
 
 ### Built-in Tools
 
@@ -348,6 +363,11 @@ result = next((m for m in reversed(messages) if hasattr(m, "result")), None)
 ```
 
 ### Error Handling
+
+Available exception types:
+- `CLINotFoundError` — Claude Code CLI binary not found in PATH
+- `CLIConnectionError` — Failed to connect to CLI process
+- Standard Python exceptions (e.g., `asyncio.TimeoutError`) may also be raised
 
 ```python
 from claude_agent_sdk import CLINotFoundError, CLIConnectionError

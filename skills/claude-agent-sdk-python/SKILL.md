@@ -1,24 +1,22 @@
 ---
-name: claude-agent-sdk-guide
+name: claude-agent-sdk-python
 description: >
-  Expert guidance for building AI agents with the Claude Agent SDK (formerly Claude Code SDK).
-  Use when the user wants to build agents using the SDK, write query() or ClaudeSDKClient code,
-  configure ClaudeAgentOptions, create custom tools, define subagents, set up hooks, integrate MCP servers,
-  manage sessions, handle permissions, use Skills in the SDK, or debug SDK-related issues.
-  Also use when user mentions "claude_agent_sdk", "claude-agent-sdk", "ClaudeAgentOptions",
-  "AgentDefinition", or asks about the difference between Agent SDK and Client SDK.
+  Expert guidance for building AI agents with the Claude Agent SDK in Python.
+  Use when the user writes Python code with the SDK, imports claude_agent_sdk, uses query(),
+  ClaudeSDKClient, ClaudeAgentOptions, AgentDefinition, creates custom @tool functions,
+  sets up hooks, integrates MCP servers, manages sessions, or debugs SDK issues in Python.
+  Also triggers on: "claude_agent_sdk", "ClaudeAgentOptions", "from claude_agent_sdk import",
+  "pip install claude-agent-sdk", "asyncio.run", or "async for message in query".
 ---
 
-# Claude Agent SDK Guide
+# Claude Agent SDK — Python Guide
 
-Expert guidance for building production AI agents with the Claude Agent SDK.
+Production guidance for building AI agents with the Claude Agent SDK in Python.
 
 > **Naming**: The Claude Code SDK was renamed to the Claude Agent SDK (v0.1.0+).
-> Python: `claude_agent_sdk` / `ClaudeAgentOptions`. TypeScript: `@anthropic-ai/claude-agent-sdk`.
+> Package: `pip install claude-agent-sdk` · Import: `from claude_agent_sdk import ...`
 
 ## Quick Reference — Two Interaction Modes
-
-The SDK provides two ways to interact with Claude:
 
 ### 1. `query()` — Stateless, One-Shot
 
@@ -87,11 +85,10 @@ All options are optional. Key fields:
 | `mcp_servers` | `dict` | MCP server configurations. |
 | `agents` | `dict[str, AgentDefinition]` | Named subagent definitions. |
 | `hooks` | `dict` | Lifecycle hook callbacks. |
-| `plugins` | `list` | Plugin configurations. |
 
 ### Built-in Tools
 
-These are the tool names you pass to `allowed_tools`:
+Tool names for `allowed_tools`:
 
 - **File ops**: `Read`, `Write`, `Edit`, `MultiEdit`
 - **Search**: `Glob`, `Grep`
@@ -109,7 +106,6 @@ from claude_agent_sdk import tool, create_sdk_mcp_server, ClaudeAgentOptions
 
 @tool("search_orders", "Search orders by customer ID", {"customer_id": str, "status": str})
 async def search_orders(args):
-    # Your actual business logic here
     results = await db.query_orders(args["customer_id"], args.get("status"))
     return {"content": [{"type": "text", "text": json.dumps(results)}]}
 
@@ -144,7 +140,7 @@ async for message in query(
                 description="Security specialist. Use for vulnerability analysis.",
                 prompt="You are a security expert. Analyze code for OWASP Top 10...",
                 tools=["Read", "Grep", "Glob"],
-                model="opus",  # Use stronger model for security
+                model="opus",
             ),
             "test-writer": AgentDefinition(
                 description="Test specialist. Use to generate test suites.",
@@ -172,8 +168,7 @@ def create_reviewer(language: str) -> AgentDefinition:
 
 ## Hooks — Lifecycle Callbacks
 
-Run custom code at key points. Available events: `PreToolUse`, `PostToolUse`, `Stop`,
-`SessionStart`, `SessionEnd`, `UserPromptSubmit`.
+Available events: `PreToolUse`, `PostToolUse`, `Stop`, `SessionStart`, `SessionEnd`, `UserPromptSubmit`.
 
 ```python
 from claude_agent_sdk import query, ClaudeAgentOptions, HookMatcher
@@ -209,8 +204,6 @@ options = ClaudeAgentOptions(
 ```
 
 ## MCP Integration (External Servers)
-
-Connect to external MCP servers for third-party integrations:
 
 ```python
 options = ClaudeAgentOptions(
@@ -256,8 +249,6 @@ Note: The `allowed-tools` field in SKILL.md frontmatter **only works in Claude C
 
 ## Sessions and Conversation Management
 
-Resume or continue conversations using session IDs:
-
 ```python
 from claude_agent_sdk import query, ClaudeAgentOptions
 
@@ -285,8 +276,6 @@ async for message in query(
 ```
 
 ## System Prompt Configuration
-
-Three approaches:
 
 ```python
 # 1. Custom system prompt (v0.1.0+ default: minimal prompt)
@@ -378,8 +367,7 @@ Key changes:
 1. `ClaudeCodeOptions` → `ClaudeAgentOptions`
 2. System prompt no longer loads Claude Code's prompt by default
 3. `setting_sources` must be explicitly set (was auto-loaded before)
-4. TypeScript: `@anthropic-ai/claude-code` → `@anthropic-ai/claude-agent-sdk`
-5. Python: import path unchanged (`claude_agent_sdk`), but class names changed
+4. Import path unchanged (`claude_agent_sdk`), but class names changed
 
 ## Best Practices
 
@@ -392,21 +380,14 @@ Key changes:
 7. **Use `cwd`** to scope the agent to a specific directory.
 8. **Capture `session_id`** from system messages if you need conversation continuity.
 
-## Official Resources
+> For troubleshooting common issues, see `references/troubleshooting.md`.
 
-For detailed information on specific topics, consult:
+## Official Resources
 
 - Overview: https://platform.claude.com/docs/en/agent-sdk/overview
 - Quickstart: https://platform.claude.com/docs/en/agent-sdk/quickstart
 - Python reference: https://platform.claude.com/docs/en/agent-sdk/python
-- TypeScript reference: https://platform.claude.com/docs/en/agent-sdk/typescript
 - Migration guide: https://platform.claude.com/docs/en/agent-sdk/migration-guide
-- Skills in SDK: https://platform.claude.com/docs/en/agent-sdk/skills
-- Subagents: https://platform.claude.com/docs/en/agent-sdk/subagents
-- Hooks: https://platform.claude.com/docs/en/agent-sdk/hooks
-- MCP in SDK: https://platform.claude.com/docs/en/agent-sdk/mcp
-- Cookbook: https://platform.claude.com/cookbook
 - Python SDK repo: https://github.com/anthropics/claude-agent-sdk-python
-- TypeScript SDK repo: https://github.com/anthropics/claude-agent-sdk-typescript
 - Demo agents: https://github.com/anthropics/claude-agent-sdk-demos
-- Anthropic engineering blog: https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk
+- Cookbook: https://platform.claude.com/cookbook

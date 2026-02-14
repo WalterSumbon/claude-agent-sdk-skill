@@ -3,20 +3,20 @@
   "description": "Expert guidance for building AI agents with the Claude Agent SDK",
   "plugins": [
     {
-      "name": "claude-agent-sdk-guide",
-      "source": "./skills/claude-agent-sdk-guide",
-      "description": "Expert guidance for building AI agents with the Claude Agent SDK (formerly Claude Code SDK). Covers query(), ClaudeSDKClient, custom tools, subagents, hooks, MCP integration, permissions, and production best practices.",
+      "name": "claude-agent-sdk-python",
+      "source": "./skills/claude-agent-sdk-python",
+      "description": "Expert guidance for building AI agents with the Claude Agent SDK in Python. Covers query(), ClaudeSDKClient, ClaudeAgentOptions, custom @tool functions, subagents, hooks, MCP integration, sessions, and production best practices.",
       "version": "1.0.0",
-      "skills": [
-        "./"
-      ],
-      "tags": [
-        "sdk",
-        "agent",
-        "claude-code",
-        "development",
-        "reference"
-      ]
+      "skills": ["./"],
+      "tags": ["sdk", "agent", "claude-code", "python", "development", "reference"]
+    },
+    {
+      "name": "claude-agent-sdk-typescript",
+      "source": "./skills/claude-agent-sdk-typescript",
+      "description": "Expert guidance for building AI agents with the Claude Agent SDK in TypeScript. Covers query(), ClaudeSDKClient, allowedTools, custom tools with createSdkMcpServer, subagents, hooks, MCP integration, sessions, and production best practices.",
+      "version": "1.0.0",
+      "skills": ["./"],
+      "tags": ["sdk", "agent", "claude-code", "typescript", "javascript", "development", "reference"]
     }
   ]
 }

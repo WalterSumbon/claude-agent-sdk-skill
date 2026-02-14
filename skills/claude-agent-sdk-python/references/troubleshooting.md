@@ -1,4 +1,4 @@
-# Troubleshooting & Common Pitfalls
+# Troubleshooting — Python SDK
 
 ## Installation Issues
 
@@ -126,7 +126,6 @@ If you still hit limits in very long sessions, consider:
 ## Migration Checklist (v0.0.x → v0.1.0)
 
 - [ ] Replace `ClaudeCodeOptions` with `ClaudeAgentOptions`
-- [ ] TypeScript: update import from `@anthropic-ai/claude-code` to `@anthropic-ai/claude-agent-sdk`
 - [ ] Review system prompt behavior — add explicit `preset: "claude_code"` if needed
 - [ ] Add `setting_sources` if you rely on Skills or CLAUDE.md
 - [ ] Test all hooks and custom tools for compatibility

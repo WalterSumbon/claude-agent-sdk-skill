@@ -15,23 +15,23 @@ Expert guidance for building production AI agents with the [Claude Agent SDK](ht
 
 ```bash
 # Install both skills
-npx skills add YOUR_GITHUB_USERNAME/claude-agent-sdk-skills
+npx skills add waltersumbon/claude-agent-sdk-skills
 
 # Install only the Python skill
-npx skills add YOUR_GITHUB_USERNAME/claude-agent-sdk-skills --skill claude-agent-sdk-python
+npx skills add waltersumbon/claude-agent-sdk-skills --skill claude-agent-sdk-python
 
 # Install only the TypeScript skill
-npx skills add YOUR_GITHUB_USERNAME/claude-agent-sdk-skills --skill claude-agent-sdk-typescript
+npx skills add waltersumbon/claude-agent-sdk-skills --skill claude-agent-sdk-typescript
 ```
 
 ### Option 2 — Claude Code Plugin Marketplace
 
 ```bash
 # Install both
-/plugin marketplace add YOUR_GITHUB_USERNAME/claude-agent-sdk-skills
+/plugin marketplace add waltersumbon/claude-agent-sdk-skills
 
 # List available skills
-/plugin marketplace add YOUR_GITHUB_USERNAME/claude-agent-sdk-skills --list
+/plugin marketplace add waltersumbon/claude-agent-sdk-skills --list
 ```
 
 ### Option 3 — Manual (any Claude tool)

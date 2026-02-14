@@ -1,0 +1,22 @@
+{
+  "name": "claude-agent-sdk-skills",
+  "description": "Expert guidance for building AI agents with the Claude Agent SDK",
+  "plugins": [
+    {
+      "name": "claude-agent-sdk-guide",
+      "source": "./skills/claude-agent-sdk-guide",
+      "description": "Expert guidance for building AI agents with the Claude Agent SDK (formerly Claude Code SDK). Covers query(), ClaudeSDKClient, custom tools, subagents, hooks, MCP integration, permissions, and production best practices.",
+      "version": "1.0.0",
+      "skills": [
+        "./"
+      ],
+      "tags": [
+        "sdk",
+        "agent",
+        "claude-code",
+        "development",
+        "reference"
+      ]
+    }
+  ]
+}
